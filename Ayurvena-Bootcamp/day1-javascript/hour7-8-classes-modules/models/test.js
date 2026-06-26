@@ -34,6 +34,36 @@ const Doctor = require("./Doctor");
 const Appointment = require("./Appointment");
 const Hospital = require("./Hospital");
 
+const hospital = new Hospital("Ayurvena Hospital");
+
+const patient = hospital.registerPatient({
+  name: "Rahul Sharma",
+  age: 32,
+  phone: "9876543210",
+  bloodGroup: "O+"
+});
+
+const doctor = hospital.addDoctor({
+  name: "Dr. Kumar",
+  specialization: "Cardiology",
+  fee: 500
+});
+
+const appointment1 = hospital.bookAppointment(
+  patient.id,
+  doctor.id,
+  "2026-07-01",
+  "09:00"
+);
+
+console.log("Dashboard Before Completion");
+console.log(hospital.getDashboard());
+
+appointment.complete();
+
+console.log("\nDashboard After Completion");
+console.log(hospital.getDashboard());
+
 const patient1 = new Patient(1, "Rahul", 32, "9876543210", "O+");
 const doctor1 = new Doctor(1, "Dr. Kumar", "Cardiology", 500);
 
