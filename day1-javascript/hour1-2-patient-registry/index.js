@@ -1,15 +1,13 @@
-// ---Array to store patient data---
+// Patient Registry System
+// ---- Patient Database ----
 let patients = [];
-
-// ---Auto-incrementing ID generator---
 let currentID = 1;
 
-//---create patient data---
-
+// ---- Initial Patients ----
 patients = [
     {
         id: currentID++,
-        name: "Rahul",
+        name: "Rahul Kumar",
         age: 32,
         phone: "8889998888",
         bloodGroup: "A+",
@@ -18,8 +16,8 @@ patients = [
     },
     {
         id: currentID++,
-        name: "Priya",
-        age:28,
+        name: "Priya Sharma",
+        age: 28,
         phone: "7778889999",
         bloodGroup: "B+",
         allergies: ["Pollen"],
@@ -27,16 +25,16 @@ patients = [
     },
     {
         id: currentID++,
-        name: "Amit",
+        name: "Amit Singh",
         age: 45,
         phone: "9998887777",
-        bloodGroup: "O-",
+        bloodGroup: "O+",
         allergies: [],
         isActive: true
     },
     {
         id: currentID++,
-        name: "Sneha",
+        name: "Sneha Reddy",
         age: 22,
         phone: "6667778888",
         bloodGroup: "AB+",
@@ -45,63 +43,131 @@ patients = [
     },
     {
         id: currentID++,
-        name: "Vikram",
+        name: "Vikram Rao",
         age: 38,
         phone: "5556667777",
         bloodGroup: "A-",
         allergies: ["Penicillin"],
         isActive: true
     }
-
 ];
+
 console.log("Initial Patient Data:", patients);
 
-// ---Function to register a new patient---
-
-function registerPatient(name, age, phone, bloodGroup, allergies=[]) {
+// ---- Register a new patient ----
+function registerPatient(name, age, phone, bloodGroup, allergies = []) {
     const newPatient = {
         id: currentID++,
-        name: name,
-        age: age,
-        phone: phone,
-        bloodGroup: bloodGroup,
-        allergies: allergies,
+        name,
+        age,
+        phone,
+        bloodGroup,
+        allergies,
         isActive: true
     };
+
     patients.push(newPatient);
     return newPatient;
 }
 
-// ---Function to find patient by Phone---
-
+// ---- Find Patient By Phone Number ----
 function findPatientByPhone(phone) {
     const patient = patients.find(p => p.phone === phone);
-    return patient ? patient : "Not Found";
+    return patient || "Not Found";
 }
 
-// ---Function to list all active patients---
+
+// ---- Active Patients ----
 
 function listActivePatients() {
-    return patients.filter(p => p.isActive === true);
+    return patients.filter(p => p.isActive);
 }
 
-// ---Function to deactivate a patient---
+// ----Deactivate a patient ----
 
 function deactivatePatient(id) {
     const patient = patients.find(p => p.id === id);
+    if (!patient) return "Patient not found";
 
-    if (patient) {
-        patient.isActive = false;
-        return patient;
-    }
-    return "Patient not found";
+    patient.isActive = false;
+    return patient;
 }
 
-// ---Testing the System---
+// ---- Search, Filter, Stats, Sort, Summary ----
 
-console.log("Register:", registerPatient("Meena", 30, "4445556666", "O+"));
-console.log("Find:", findPatientByPhone("5556667777"));
-console.log("Find Invalid:", findPatientByPhone("000"));
-console.log("Active Patients:", listActivePatients());
-console.log("Deactivate:", deactivatePatient(1));
-console.log("Active After Deactivation:", listActivePatients());
+function searchPatients(query) {
+    return patients.filter(p =>
+        p.name.toLowerCase().includes(query.toLowerCase())
+    );
+}
+
+// ---- FILTER BY BLOOD Group ----
+function filterByBloodGroup(group) {
+    return patients.filter(p => p.bloodGroup === group);
+}
+
+// ---- Patient Statistics----
+function getPatientStats() {
+    const total = patients.length;
+    const active = patients.filter(p => p.isActive).length;
+
+    const avgAge =
+        patients.reduce((sum, p) => sum + p.age, 0) / total;
+
+    const bloodGroups = patients.reduce((acc, p) => {
+        acc[p.bloodGroup] = (acc[p.bloodGroup] || 0) + 1;
+        return acc;
+    }, {});
+
+    return {
+        total,
+        active,
+        avgAge: Number(avgAge.toFixed(1)),
+        bloodGroups
+    };
+}
+
+// ---- Sort Patients ----
+function sortPatients(field, order = "asc") {
+    return [...patients].sort((a, b) => {
+        if (order === "asc") return a[field] > b[field] ? 1 : -1;
+        else return a[field] < b[field] ? 1 : -1;
+    });
+}
+
+// ---- Patient Summary ----
+function getPatientSummary(id) {
+    const p = patients.find(p => p.id === id);
+    if (!p) return "Patient not found";
+
+    const allergies =
+        p.allergies.length > 0 ? p.allergies.join(", ") : "None";
+
+    return `${p.name} | Age: ${p.age} | Blood: ${p.bloodGroup} | Allergies: ${allergies}`;
+}
+
+// ---- Testing ----
+
+console.log("\n--- REGISTER TEST ---");
+console.log(registerPatient("Meena Joshi", 30, "4445556666", "O+"));
+
+console.log("\n--- SEARCH TEST ---");
+console.log(searchPatients("rah"));
+
+console.log("\n--- BLOOD GROUP FILTER ---");
+console.log(filterByBloodGroup("O+"));
+
+console.log("\n--- STATS ---");
+console.log(getPatientStats());
+
+console.log("\n--- SORT BY AGE DESC ---");
+console.log(sortPatients("age", "desc"));
+
+console.log("\n--- SUMMARY ---");
+console.log(getPatientSummary(1));
+
+console.log("\n--- DEACTIVATE ---");
+console.log(deactivatePatient(1));
+
+console.log("\n--- ACTIVE PATIENTS ---");
+console.log(listActivePatients());
