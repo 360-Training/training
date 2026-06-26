@@ -26,7 +26,7 @@ module.exports = {
     NotFoundError,
     AppointmentError
 } ;
-
+console.log("--1. ValidationError--");
 try{ 
     throw new ValidationError("Invalid phone number");
 }catch(error){
@@ -34,12 +34,16 @@ try{
     console.log(error.message);
 }
 
+console.log("\n-- 2. NotFoundError--");
+
 try{
     throw new NotFoundError("Patient not found");
 }catch(error){
     console.log(error.name);
     console.log(error.message);
 }
+
+console.log("\n--3. AppointmentError--");
 
 try{
     throw new AppointmentError("Appointment booking failed");
