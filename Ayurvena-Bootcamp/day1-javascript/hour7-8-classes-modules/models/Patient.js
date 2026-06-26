@@ -38,7 +38,7 @@ module.exports = Patient;
 
 // TESTS
 
-const patient1 = new Patient(
+/*const patient1 = new Patient(
   6,
   "Abhay",
   32,
@@ -60,4 +60,4 @@ console.log(patient1.getProfile());
 
 console.log("\nDeactivate Patient");
 patient1.deactivate();
-console.log(patient1.getProfile());
+console.log(patient1.getProfile());*/

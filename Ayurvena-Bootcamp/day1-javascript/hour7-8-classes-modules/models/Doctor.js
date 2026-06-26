@@ -83,7 +83,7 @@ module.exports = Doctor;
 
 //const Doctor = require("./Doctor");
 
-const doctor1 = new Doctor(
+/*const doctor1 = new Doctor(
   1,
   "Dr. Kumar",
   "Cardiology",
@@ -121,4 +121,4 @@ console.log(doctor1.schedule["2026-07-01"]);
 
 // ------------------ Earnings After Freeing Slot ------------------
 console.log("\nEarnings After Freeing Slot:");
-console.log("Total Earnings:", doctor1.getEarnings());
+console.log("Total Earnings:", doctor1.getEarnings());*/

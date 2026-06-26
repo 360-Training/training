@@ -51,7 +51,7 @@ class Appointment {
 module.exports = Appointment;
 
 // ---------------- TESTS ----------------
-const Patient = require("./Patient");
+/*const Patient = require("./Patient");
 const Doctor = require("./Doctor");
 
 const patient = new Patient(
@@ -92,4 +92,4 @@ appointment.cancel();
 console.log(appointment.status);
 
 console.log("\n--- TEST 5: Receipt After Cancellation ---");
-console.log(appointment.generateReceipt());
+console.log(appointment.generateReceipt());*/
