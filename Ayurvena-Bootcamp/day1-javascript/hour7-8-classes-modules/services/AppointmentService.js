@@ -87,3 +87,70 @@ class AppointmentService {
 }
 
 module.exports = AppointmentService;
+
+
+// ---------------- TESTS ----------------
+
+const Patient = require("../models/Patient");
+const Doctor = require("../models/Doctor");
+
+const appointmentService = new AppointmentService();
+
+const patient = new Patient(
+  1,
+  "Rahul Sharma",
+  30,
+  "9876543210",
+  "O+"
+);
+
+const doctor = new Doctor(
+  1,
+  "Dr. Kumar",
+  "Cardiology",
+  500,
+);
+
+console.log("\n--- TEST 1: Book Appointment ---");
+
+const appointment = appointmentService.bookAppointment(
+  patient,
+  doctor,
+  "2026-07-01",
+  "09:00"
+);
+
+console.log("Schedule:", doctor.schedule);
+console.log("Available:", doctor.isAvailable("2026-07-01", "09:00"));
+
+console.log(appointment);
+
+console.log("\n--- TEST 2: Patient History ---");
+
+console.log(
+  appointmentService.getPatientHistory(1)
+);
+
+console.log("\n--- TEST 3: Doctor Appointments ---");
+
+console.log(
+  appointmentService.getDoctorAppointments(1)
+);
+
+console.log("\n--- TEST 4: Cancel Appointment ---");
+
+console.log(
+  appointmentService.cancelAppointment(1)
+);
+
+console.log("\n--- TEST 5: All Appointments ---");
+
+console.log(
+  appointmentService.getAllAppointments()
+);
+
+console.log("\n--- TEST 6: Appointment Count ---");
+
+console.log(
+  appointmentService.getAppointmentCount()
+);
