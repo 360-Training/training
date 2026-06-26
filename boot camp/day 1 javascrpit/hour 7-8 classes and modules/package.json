@@ -1,0 +1,13 @@
+{
+  "name": "hospital-practice",
+  "version": "1.0.0",
+  "description": "Hospital management system demo split into models/services/utils/data, mirroring NestJS structure.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
