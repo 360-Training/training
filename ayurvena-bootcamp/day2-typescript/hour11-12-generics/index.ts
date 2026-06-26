@@ -351,3 +351,106 @@ function deletePatient(
         "Patient Deleted"
     );
 }
+
+
+interface BookingSuccess{
+    type:"success";
+    appointment:IAppointment;
+    payment:IPayment;
+    receipt:string;
+}
+
+interface BookingSlotUnavailable{
+    type:"slot_unavailable";
+    doctor:string;
+    suggestedSlots:string[];
+}
+
+interface BookingPaymentFailed{
+    type:"payment_failed";
+    appointment:IAppointment;
+    error:string;
+    retryable:boolean;
+}
+
+interface BookingValidationError{
+    type:"validation_error";
+    errors:{
+        field:string;
+        message:string;
+    }[];
+}
+
+type BookingResult =
+    | BookingSuccess
+    | BookingSlotUnavailable
+    | BookingPaymentFailed
+    | BookingValidationError;
+
+
+async function bookAppointmentFlow(
+    data: CreateAppointmentDto
+): Promise<BookingResult> {
+  if (
+    !data.patientId ||
+    !data.doctorId
+) {
+    return {
+        type: "validation_error",
+        errors: [
+            {
+                field: "patientId",
+                message: "Patient or Doctor is missing"
+            }
+        ]
+    };
+}
+const slotAvailable = true;
+if (!slotAvailable) {
+    return {
+        type: "slot_unavailable",
+        doctor: "Dr. Kumar",
+        suggestedSlots: [
+            "10:00",
+            "10:30",
+            "11:00"
+        ]
+    };
+}
+const paymentSuccess = true;
+if (!paymentSuccess) {
+    return {
+        type: "payment_failed",
+        appointment: {} as IAppointment,
+        error: "Payment Declined",
+        retryable: true
+    };
+}
+return {
+
+    type: "success",
+    appointment: {} as IAppointment,
+    payment: {} as IPayment,
+    receipt: "Booking Successful"
+
+};
+}
+
+function handleBookingResult(
+    result: BookingResult
+): string {
+    switch (result.type) {
+        case "success":
+            return `Booking confirmed! ${result.receipt}`;
+        case "slot_unavailable":
+            return `Slot unavailable. Try: ${result.suggestedSlots.join(", ")}`;
+        case "payment_failed":
+            return `Payment failed: ${result.error}`;
+        case "validation_error":
+            return result.errors
+                .map(error => `${error.field}: ${error.message}`)
+                .join(", ");
+        default:
+            return "Unknown Result";
+    }
+}
