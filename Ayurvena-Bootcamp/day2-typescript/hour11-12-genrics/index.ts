@@ -256,3 +256,47 @@ console.log(
 );
 // delete patient
 console.log(service.deletePatient(2));
+
+/// TypeScript Error Test cases
+
+// Passing wrong field names
+/*
+service.createPatient({
+    fullname: "Harshitha Reddy",
+    age : 25,
+    gender: "female",
+    phone: "9551294117",
+    bloodGroup: "B+",
+    allergies: []
+});
+*/
+
+// Passing wrong data types
+/*
+service.createPatient({
+    name: "Harshitha Reddy",
+    age : "twenty five",
+    gender : "female",
+    phone : "9551294117",
+    bloodGroup: "B+",
+    allergies: []
+});
+*/
+
+// Accessing a field that doesn't exiost on the response
+/*
+const response = service.getPatientById(1);
+console.log(response.data.address);
+*/
+//wrong update type
+/*
+service.updatePatient(1,{
+    age : "Thirty"
+});
+*/
+// wrong propert in update
+/*
+service.updatePatient(1,{
+    salary: 50000
+});
+*/
