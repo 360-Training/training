@@ -1,9 +1,40 @@
+type BloodGroup = "O+" | "O-" | "AB+" | "AB-" | "B+" | "B-" | "A+" | "A-";
+type AppointmentStatus = "scheduled" | "completed" | "cancelled" | "no-show";
+type PaymentMethod = "cash" | "card" | "upi" | "insurance";
+type PaymentStatus = "pending" | "paid" | "failed" | "refunded";
+type Gender = "female" | "male" | "other";
+
+enum UserRole {
+    Patient = "patient",
+    Doctor = "doctor",
+    Recepitionist = "recipitionist",
+    Nurse = "nurse",
+    Admin = "admin",
+    SuperAdmin = "superAdmin"
+}
+enum Depatrment{
+    Cardiology = "cardiology",
+    Neurology = "neurology",
+    Orthopedics = "orthopedics",
+    Pediatrics = "pediactrics",
+    General = "general",
+    Emergency = "emergency",
+    ICU = "icu"
+}
+enum TriageLevel  {
+    Level1 = 1,
+    Level2,
+    Level3,
+    Level4,
+    Level5   
+}
 interface IPatient{
     id : number;
     name : string;
     age : number;
     phone : string;
     bloodGroup : string;
+    gender : Gender;
     allergies : string[];
     isActive : boolean;
     createdAt : Date;
@@ -12,6 +43,7 @@ interface IDoctor{
     id : number;
     name : string;
     specialization : string;
+    department : Depatrment;
     fee : number;
     availableDays: string[];
     slots : ISlot[];
@@ -43,6 +75,7 @@ class Patient implements IPatient{
     age: number;
     phone: string;
     bloodGroup: string;
+    gender: Gender;
     allergies: string[];
     isActive: boolean;
     createdAt: Date;
@@ -52,13 +85,15 @@ class Patient implements IPatient{
         name : string,
         age : number,
         phone: string,
-        bloodGroup : string
+        bloodGroup : string,
+        gender : Gender
     ){
         this.id = id;
         this.name =name;
         this.age = age;
         this.phone = phone;
         this.bloodGroup = bloodGroup;
+        this.gender = gender
         this.allergies = [];
         this.isActive = true;
         this.createdAt = new Date();
@@ -81,6 +116,7 @@ class Patient implements IPatient{
             age : this.age,
             phone : this.phone,
             bloodGroup : this.bloodGroup,
+            gender : this.gender,
             allergies : this.allergies,
             isActive : this.isActive,
             createdAt : this.createdAt
@@ -99,7 +135,8 @@ class PatientService {
             data.name,
             data.age,
             data.phone,
-            data.bloodGroup
+            data.bloodGroup,
+            data.gender
         );
         patient.allergies = data.allergies;
         this.patients.push(patient);
@@ -126,7 +163,8 @@ const patient = patientService.register({
     age : 28,
     phone : "9723587201",
     bloodGroup : "O+",
-    allergies : ["Dust"]
+    allergies : ["Dust"],
+    gender : "female"
 });
 
 console.log(patient);
