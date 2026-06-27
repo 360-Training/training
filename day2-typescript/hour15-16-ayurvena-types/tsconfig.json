@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    
+    "moduleResolution": "nodenext",
+"module": "nodenext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

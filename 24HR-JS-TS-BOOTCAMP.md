@@ -209,7 +209,6 @@ git push                     — Upload to GitHub
 git pull                     — Download latest changes
 git log --oneline            — See your commit history
 ```
-
 ---
 
 ## Project Folder Structure

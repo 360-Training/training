@@ -22,6 +22,7 @@ console.log(patientResponse);
 
 // Generic Class
 class DataStorage<T> {
+  
   private items: T[] = [];
 
   add(item: T) {
