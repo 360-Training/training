@@ -35,14 +35,14 @@ export enum PaymentMethod {
     Insurance = "insurance"
 }
 export enum BloodGroup {
-    APositive = "O+",
-    ANegative = "O-",
-    BPositive = "AB+",
-    BNegative = "AB-",
-    ABPositive = "B+",
-    ABNegative = "B-",
-    OPositive = "A+",
-    ONegative = "A-"
+    OPositive = "O+",
+    ONegative = "O-",
+    ABPositive = "AB+",
+    ABNegative = "AB-",
+    BPositive = "B+",
+    BNegative = "B-",
+    APositive = "A+",
+    ANegative = "A-"
 }
 
 export enum Gender {
