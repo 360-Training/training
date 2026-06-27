@@ -5,7 +5,6 @@ export class Appointment {
     this.doctor = doctor;
     this.status = "scheduled";
   }
-
   cancel() {
     this.status = "cancelled";
   }

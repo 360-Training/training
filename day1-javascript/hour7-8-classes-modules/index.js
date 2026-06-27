@@ -14,30 +14,25 @@ import { PatientService } from "./services/PatientService.js";
 import { DoctorService } from "./services/DoctorService.js";
 import { AppointmentService } from "./services/AppointmentService.js";
 import { DashboardService } from "./services/DashboardService.js";
-
 const patientService = new PatientService();
 const doctorService = new DoctorService();
 const appointmentService = new AppointmentService();
-
 const patient = patientService.registerPatient(
   1,
   "Soumya",
   22
 );
-
 const doctor = doctorService.addDoctor(
   1,
   "Dr Kumar",
   "Cardiology",
   500
 );
-
 appointmentService.bookAppointment(
   1,
   patient,
   doctor
 );
-
 console.log(
   DashboardService.getDashboard(
     patientService.getAllPatients(),

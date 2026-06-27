@@ -5,11 +5,9 @@ export class Patient {
     this.age = age;
     this.isActive = true;
   }
-
   deactivate() {
     this.isActive = false;
   }
-
   getProfile() {
     return {
       id: this.id,
