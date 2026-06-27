@@ -122,9 +122,9 @@ class PatientService {
 
 const patientService = new PatientService();
 const patient = patientService.register({
-    name : "Rahul Sharma",
+    name : "Srinitha",
     age : 28,
-    phone : "9876543210",
+    phone : "9723587201",
     bloodGroup : "O+",
     allergies : ["Dust"]
 });
