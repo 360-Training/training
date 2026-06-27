@@ -1,4 +1,4 @@
-export enum UserRole {
+/*export enum UserRole {
     Patient = "patient",
     Doctor = "doctor",
     Receptionist = "receptionis",
@@ -49,4 +49,30 @@ export enum Gender {
     Male = "male",
     Female = "female",
     Other = "other"
+}
+
+export enum PatientStatus {
+    Active = "Active",
+    Admitted = "Admitted",
+    Discharged = "Discharged"
+}
+
+console.log()*/
+
+export enum PatientStatus {
+    Active = "Active",
+    Admitted = "Admitted",
+    Discharged = "Discharged"
+}
+export enum Department {
+    General = "General Medicine",
+    Cardiology = "Cardiology",
+    Orthopedics = "Orthopedics",
+    Pediatrics = "Pediatrics"
+}
+export enum AppointmentStatus {
+    Pending = "Pending",
+    Confirmed = "Confirmed",
+    Completed = "Completed",
+    Cancelled = "Cancelled"
 }
