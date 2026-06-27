@@ -4,7 +4,7 @@ import {
     AppointmentStatus,
     PaymentStatus,
     PaymentMethod
-} from "./enums";
+} from "./enums.js";
 
 export interface IBaseEntity {
     id: number;
