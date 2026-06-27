@@ -137,15 +137,9 @@ addPatient(
 );
 
 showPatients();
-
 findPatient(3);
-
 updateDisease(2, "Viral Fever");
-
 deletePatient(1);
-
 showPatients();
-
 patientsAboveAge(30);
-
 totalPatients();
