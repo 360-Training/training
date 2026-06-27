@@ -1,59 +1,34 @@
-export enum UserRole {
-    Patient = "patient",
-    Doctor = "doctor",
-    Receptionist = "receptionis",
-    Nurse = "nurse",
-    Admin = "admin",
-    SuperAdmin = "superAdmin"
+export enum UserRole{
+  PATIENT="patient",
+  DOCTOR="doctor",
+  RECEPTIONIST="receptionist",
+  NURSE="nurse",
+  ADMIN="admin",
+  SUPER_ADMIN='super_admin'
 }
-export enum Department {
-    General = "general",
-    Cardiology = "cardiology",
-    Neurology = "neurology",
-    Orthopedics = "orthopedics",
-    Pediatrics = "pediatrics",
-    Emergency = "emergency"
-}
-export enum AppointmentStatus {
-    Scheduled = "scheduled",
-    Completed = "completed",
-    Cancelled = "cancelled",
-    NoShow = "no_show"
-}
-
-export enum PaymentStatus {
-    Pending = "pending",
-    Paid = "paid",
-    Failed = "failed",
-    Refunded = "refunded"
-}
-
-export enum PaymentMethod {
-    Cash = "cash",
-    Card = "card",
-    UPI = "upi",
-    Insurance = "insurance"
-}
-export enum BloodGroup {
-    OPositive = "O+",
-    ONegative = "O-",
-    ABPositive = "AB+",
-    ABNegative = "AB-",
-    BPositive = "B+",
-    BNegative = "B-",
-    APositive = "A+",
-    ANegative = "A-"
-}
-
-export enum Gender {
-    Male = "male",
-    Female = "female",
-    Other = "other"
-}
-
-export enum PatientStatus {
-    Active = "Active",
-    Admitted = "Admitted",
-    Discharged = "Discharged"
-}
-
+export enum Department{
+  CARDIOLOGY="cardiology",
+  NEUROLOGY="neurology",
+  ORTHOPEDICS="orthopedics",
+  GENERAL="general",
+  EMERGENCY="emergency",
+  ICU="icu"
+ }
+export enum AppointmentStatus{
+  SCHEDULED="scheduled",
+  COMPLETED="completed",
+  CANCELLED="cancelled",
+  NO_SHOW="no_show"
+ }
+export enum PaymentStatus{
+  PENDING="pending",
+  PAID="paid",
+  FAILED="failed",
+  REFUNDED="refunded"
+ }
+export enum PaymentMethod{
+  CASH="cash",
+  CARD="card",
+UPI="upi",
+INSURANCE="insurance"
+ }

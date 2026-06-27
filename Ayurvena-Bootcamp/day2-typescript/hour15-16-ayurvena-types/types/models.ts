@@ -1,11 +1,9 @@
 import {
-    BloodGroup,
+    UserRole,
     Department,
     AppointmentStatus,
-    PaymentMethod,
     PaymentStatus,
-    Gender,
-    UserRole
+    PaymentMethod
 } from "./enums";
 
 export interface IBaseEntity {
@@ -22,9 +20,9 @@ export interface IUser extends IBaseEntity {
 }
 
 export interface IPatient extends IUser {
+    bloodGroup: string;
     age: number;
-    gender: Gender;
-    bloodGroup: BloodGroup;
+    gender: string;
     allergies: string[];
 }
 
@@ -34,41 +32,38 @@ export interface IDoctor extends IUser {
     fee: number;
 }
 
-export interface IPayment extends IBaseEntity {
-    amount: number;
-    method: PaymentMethod;
-    status: PaymentStatus;
-    transactionId: string;
+export interface IAppontiment extends IBaseEntity{
+  patientId:number;
+  doctorId:number;
+  date:string;
+  time:string;
+  status:AppointmentStatus;
 }
-
-export interface IAppointment extends IBaseEntity {
-    patientId: number;
-    doctorId: number;
-    date: string;
-    time: string;
-    status: AppointmentStatus;
-    payment?: IPayment;
+export interface IConsultation extends IBaseEntity{
+  appointmentId:number;
+  diagonsis:string;
+  notes:string;
 }
-
-export interface IConsultation extends IBaseEntity {
-    appointmentId: number;
-    diagnosis: string;
-    notes: string;
-}
-
 export interface IPrescription extends IBaseEntity {
     consultationId: number;
     medicines: string[];
+    instructions: string;
 }
-
-export interface IAdmission extends IBaseEntity {
-    patientId: number;
-    roomNumber: string;
-    admittedOn: Date;
+export interface IPayment extends IBaseEntity {
+    appointmentId: number;
+    amount: number;
+    method: PaymentMethod;
+    status: PaymentStatus;
 }
-
+export interface IAdmission extends IBaseEntity{
+  patientID:number;
+  roomNumber:string;
+  admittedAt:Date;
+  dischargedAt?:Date;
+}
 export interface ILabOrder extends IBaseEntity {
     patientId: number;
     testName: string;
     status: string;
+    result?: string;
 }
