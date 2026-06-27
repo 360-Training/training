@@ -133,5 +133,5 @@ console.log(patient);
 patient.addAllergy("Penicillin");
 console.log(patient.getProfile());
 console.log(patientService.findById(1));
-console.log(patientService.search("rah"));
+console.log(patientService.search("sri"));
 console.log(patientService.getAllPatients());
