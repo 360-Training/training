@@ -102,7 +102,7 @@ function successResponse<T> (
         success : true,
         data,
         message,
-        statusCode : 300
+        statusCode : 200
     };
 }
 
@@ -224,6 +224,213 @@ class PatientSerivce {
         );
     }
 }
+
+const doctors : IDoctor[] = [
+    {
+        id : 1,
+        name : "Dr. Kumar",
+        specialization : "Cardiologyist",
+        department : Department.Cardiology,
+        fee : 500
+    },
+    {
+        id : 2,
+        name : "Dr. Priya",
+        specialization: "Neurologist",
+        department: Department.Neurology,
+        fee: 700
+    }
+];
+
+const appointments: IAppointment[] = [];
+
+//Booking Result
+
+interface BookingSuccess {
+    type : "success";
+    appointment : IAppointment;
+    payment : IPayment;
+    receipt : string;
+}
+interface BookingSlotUnavailable {
+    type : "slot_unavailable";
+    doctor : string;
+    suggestedSlots : string[];
+}
+interface BookingPaymentFailed{
+    type : "payment_failed";
+    appointment : IAppointment;
+    error : string;
+    retryable : boolean;
+}
+interface BookingValidationError {
+    type : "validation_error";
+    errors: {
+        field : string;
+        message : string;
+    }[]; 
+}
+type BookingResult = 
+    | BookingSuccess
+    | BookingSlotUnavailable
+    | BookingPaymentFailed 
+    | BookingValidationError;
+
+// BOOKING FLOW
+
+async function bookAppointmentFlow(
+    data: CreateAppointmentDto
+): Promise<BookingResult>{
+    const errors = [];
+    if(!data.patientId)
+        errors.push({
+            field : "patientId",
+            message : "Patient is Required"
+        });
+    if(!data.doctorId)
+        errors.push({
+            field : "doctorId",
+            message : "Doctor is required"
+        });
+    if(!data.date)
+        errors.push({
+            field : "date",
+            message: "Date is required"
+        });
+    if(!data.time)
+        errors.push({
+            field : "time",
+            message : "Time is required"
+        });
+    if(errors.length > 0){
+        return {
+            type : "validation_error",
+            errors
+        };
+    }
+    const doctor = doctors.find(d => d.id === data.doctorId)!;
+    const exists = appointments.find(
+        a => 
+            a.doctorId === data.doctorId &&
+            a.date === data.date && 
+            a.time === data.time
+    );
+    if (exists){
+        return {
+            type : "slot_unavailable",
+            doctor : doctor.name,
+            suggestedSlots: [
+                "10:00",
+                "10:30",
+                "11:00"
+            ]
+        };
+    }
+    const paymentSuccess = Math.random() > 0.5;
+    const payment : IPayment = {
+        amount : doctor.fee,
+        method : "upi",
+        transcationId : "TXN" + Date.now(),
+        status : paymentSuccess ? "paid" : "failed",
+        paidAt : new Date()
+    };
+    const appointment : IAppointment = {
+        id : appointments.length+1,
+        patientId : data.patientId,
+        doctorId : data.doctorId,
+        date : data.date,
+        time : data.time,
+        status : "scheduled",
+        payment
+    };
+    appointments.push(appointment);
+    if(!paymentSuccess){
+        return {
+            type: "payment_failed",
+            appointment,
+            error : "Payment Failed",
+            retryable : true
+        };
+    }   
+    return {
+        type : "success",
+        appointment,
+        payment,
+        receipt : "REC-" + appointment.id
+    };
+}
+function handleBookingResult(result : BookingResult) : string {
+    switch (result.type){
+        case "success":
+            return `Booking confirmed! Appointment #${result.appointment.id} with Doctor ${result.appointment.doctorId} as %{result.appointment.time}`;
+        case "slot_unavailable":
+            return `Slot taken. Try : ${result.suggestedSlots.join(",")}`;
+        case "payment_failed" :
+            return result.retryable ? "Payment Failed. Retrying......" : "Contact Support.";
+        case "validation_error" :
+            return "Fix these: " +
+                result.errors
+                    .map(e => `${e.field} ${e.message}`)
+                    .join(", ");
+        default :
+            const exhaustive : never = result;
+            return exhaustive;
+    }
+}
+
+// TESTING
+(async () => {
+    console.log("\n SUCCESS TEST");
+    const result =await bookAppointmentFlow({
+        patientId : 1,
+        doctorId : 1,
+        date : "2026-07-01",
+        time : "09:00"
+    });
+    console.log(handleBookingResult(result));
+})();
+
+(async () => {
+    console.log("\n VALIDATION TEST");
+    const result = await bookAppointmentFlow({
+        patientId: 0,
+        doctorId : 0,
+        date : "",
+        time : ""
+    });
+    console.log(handleBookingResult(result));
+})();
+
+appointments.push({
+    id : 100,
+    patientId : 1,
+    doctorId : 1,
+    date : "2025-10-06",
+    time : "11:00",
+    status : "scheduled"
+});
+(async () => {
+    console.log("\n SLOT UNAVAIABLE TEST");
+    const result = await bookAppointmentFlow({
+        patientId : 2,
+        doctorId : 1,
+        date : "2025-10-06",
+        time : "11:00"
+    });
+    console.log(handleBookingResult(result));
+})();
+
+(async () => {
+    console.log ("\n PAYMENT FAILED");
+    const result = await bookAppointmentFlow({
+        patientId : 1,
+        doctorId : 2,
+        date : "2026-07-21",
+        time : "10:00"
+    });
+    console.log(handleBookingResult(result));
+})();
+
 // TEST CASES
 
 const service = new PatientSerivce();
