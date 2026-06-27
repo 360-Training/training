@@ -286,7 +286,7 @@ else{
 const patientInput: unknown = {
     name: "Sreenitha",
     phone: "9815291471",
-    bloodGroup: "O-"
+    bloodGroup: "O"
 };
 
 const patientResult = validateCreatePatient(patientInput);
