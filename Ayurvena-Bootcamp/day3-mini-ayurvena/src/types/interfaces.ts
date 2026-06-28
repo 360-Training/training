@@ -9,7 +9,6 @@ import {
 
 export interface IEntity {
   id: number;
-  hospitalId : number;
   createdAt : Date;
   updatedAt : Date;
 }
