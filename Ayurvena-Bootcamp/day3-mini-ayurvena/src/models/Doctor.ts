@@ -3,7 +3,6 @@ import type { Department } from "../types/enums.js";
 export class Doctor implements IDoctor {
     constructor (
         public id : number,
-        public hospitalId : number,
         public name : string,
         public department : Department,
         public specialization : string,
