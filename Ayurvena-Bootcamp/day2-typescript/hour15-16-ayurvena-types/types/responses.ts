@@ -25,3 +25,4 @@ export interface DashboardResponse<T> {
     data : T;
     generateAt : Date;
 }
+

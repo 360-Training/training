@@ -29,6 +29,6 @@ export enum PaymentStatus{
 export enum PaymentMethod{
   CASH="cash",
   CARD="card",
-UPI="upi",
-INSURANCE="insurance"
- }
+  UPI="upi",
+  INSURANCE="insurance"
+}

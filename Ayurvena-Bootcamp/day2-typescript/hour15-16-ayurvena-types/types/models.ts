@@ -1,4 +1,63 @@
 import {
+  UserRole,
+  Department,
+  AppointmentStatus,
+  PaymentStatus,
+  PaymentMethod
+} from "./enums.js";
+
+export interface IBase {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IUser extends IBase {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  role: UserRole;
+}
+
+export interface IPatient extends IBase {
+  name: string;
+  age: number;
+  gender: string;
+  phone: string;
+  bloodGroup: string;
+  address: string;
+  emergencyContact: string;
+}
+
+export interface IDoctor extends IBase {
+  name: string;
+  email: string;
+  phone: string;
+  department: Department;
+  specialization: string;
+  qualification: string;
+  experience: number;
+  consultationFee: number;
+}
+
+export interface IAppointment extends IBase {
+  patientId: string;
+  doctorId: string;
+  appointmentDate: Date;
+  reason: string;
+  status: AppointmentStatus;
+}
+
+export interface IPayment extends IBase {
+  appointmentId: string;
+  amount: number;
+  method: PaymentMethod;
+  status: PaymentStatus;
+  transactionId: string;
+}
+
+/*import {
     UserRole,
     Department,
     AppointmentStatus,
@@ -66,4 +125,4 @@ export interface ILabOrder extends IBaseEntity {
     testName: string;
     status: string;
     result?: string;
-}
+}*/
