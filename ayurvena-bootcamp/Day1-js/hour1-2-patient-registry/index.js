@@ -28,7 +28,7 @@ let patients = [
 ];
 
 function showPatients() {
-  console.log("\n------ Patient List ------");
+  console.log("\n Patient List");
 
   if (patients.length === 0) {
     console.log("No patients available.");
@@ -113,9 +113,6 @@ function patientsAboveAge(age) {
     console.log(item.name + " - " + item.age);
   });
 }
-
-
-
 showPatients();
 
 addPatient(
@@ -126,7 +123,6 @@ addPatient(
   "Headache",
   "9123456789"
 );
-
 addPatient(
   5,
   "Ramesh",
@@ -135,7 +131,6 @@ addPatient(
   "Back Pain",
   "9000012345"
 );
-
 showPatients();
 findPatient(3);
 updateDisease(2, "Viral Fever");
