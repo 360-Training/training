@@ -5,7 +5,6 @@ import { AppointmentStatus } from "../types/enums.js";
 export class Appointment implements IAppointment {
     constructor (
         public id : number,
-        public hospitalId : number,
         public patientId : number,
         public doctorId : number,
         public date : string,
