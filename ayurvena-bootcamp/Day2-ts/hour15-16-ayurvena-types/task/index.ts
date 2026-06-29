@@ -1,4 +1,4 @@
-interface Idoctor[
+interface doctor[
     {
     id:101,
     name:"srinu",
