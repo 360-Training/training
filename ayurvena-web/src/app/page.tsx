@@ -1,16 +1,14 @@
-import { WelcomeBanner } from "@/components/ui/welcome";
-import { PatientCounter } from "@/components/patient/patient-counter";
-
-export default function Home() {
+export default function HomePage() {
   return (
     <main>
-      <WelcomeBanner
-        hospitalName="Ayurvena Hospital"
-        doctorCount={45}
-        patientCount={350}
-      />
+      <h1>Ayurvena Hospital</h1>
+      <p>Your complete hospital management solution</p>
 
-      <PatientCounter department="Cardiology" />
+      <nav>
+        <a href="/patients">Patients</a>
+        <a href="/doctors">Doctors</a>
+        <a href="/appointments">Appointments</a>
+      </nav>
     </main>
   );
 }
