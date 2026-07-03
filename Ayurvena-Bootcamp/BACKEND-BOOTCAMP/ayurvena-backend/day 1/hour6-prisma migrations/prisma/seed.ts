@@ -2,8 +2,17 @@
 // Run: npx prisma db seed
 
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
-const prisma = new PrismaClient();
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+const adapter = new PrismaPg(pool);
+
+const prisma = new PrismaClient({
+  adapter,
+});
 
 async function main() {
   console.log(' Starting seed...');
@@ -183,6 +192,60 @@ async function main() {
     });
   }
   console.log(`✅ ${paymentData.length} payments created`);
+  // 7. Create Medical Records
+  const medicalRecords = [
+    {
+      patientId: allPatients[0]!.id,
+      recordType: "Lab Report",
+      title: "Complete Blood Count",
+      description: "Blood test results are normal.",
+      attachments: "blood_report.pdf",
+      recordedBy: allDoctors[0]!.id,
+      recordDate: new Date("2024-03-15"),
+    },
+    {
+      patientId: allPatients[1]!.id,
+      recordType: "X-Ray",
+      title: "Chest X-Ray",
+      description: "Chest X-Ray shows no abnormalities.",
+      attachments: "chest_xray.pdf",
+      recordedBy: allDoctors[1]!.id,
+      recordDate: new Date("2024-03-16"),
+    },
+    {
+      patientId: allPatients[2]!.id,
+      recordType: "MRI",
+      title: "Brain MRI",
+      description: "MRI scan is normal.",
+      attachments: "brain_mri.pdf",
+      recordedBy: allDoctors[2]!.id,
+      recordDate: new Date("2024-03-17"),
+    },
+    {
+      patientId: allPatients[3]!.id,
+      recordType: "ECG",
+      title: "ECG Report",
+      description: "Normal sinus rhythm.",
+      attachments: "ecg_report.pdf",
+      recordedBy: allDoctors[0]!.id,
+      recordDate: new Date("2024-03-18"),
+    },
+    {
+      patientId: allPatients[4]!.id,
+      recordType: "Prescription",
+      title: "General Prescription",
+      description: "Prescribed medicines for follow-up treatment.",
+      attachments: "prescription.pdf",
+      recordedBy: allDoctors[4]!.id,
+      recordDate: new Date("2024-03-19"),
+    },
+  ];
+  for (const record of medicalRecords) {
+    await prisma.medicalRecord.create({
+      data: record,
+    });
+  }
+  console.log(`✅ ${medicalRecords.length} medical records created`);  
   console.log('🎉 Seed completed!');
 }
 
