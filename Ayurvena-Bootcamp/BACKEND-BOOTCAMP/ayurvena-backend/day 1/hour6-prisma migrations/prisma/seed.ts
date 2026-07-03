@@ -128,23 +128,30 @@ async function main() {
     orderBy: { id: 'asc' },
   });
 
+
   const diagnoses = ['Mild angina - stable', 'Tension-type headache', 'Mild osteoarthritis - right knee', 'Angina - improving', 'Normal cardiac function'];
   const notesList = ['ECG shows minor ST changes.', 'No neurological deficits.', 'X-ray shows mild joint space narrowing.', 'Reduced chest pain frequency.', 'All cardiac markers normal.'];
   const symptomsList = ['Chest pain, SOB', 'Bilateral headache', 'Right knee pain, stiffness', 'Occasional chest discomfort', 'No symptoms - routine'];
 
-  for (let i = 0; i < completed.length; i++) {
-    const c = await prisma.consultation.create({
-      data: {
+  for (let i = 0; i < Math.min(completed.length, diagnoses.length); i++) {
+    let c = await prisma.consultation.findUnique({
+      where: {
         appointmentId: completed[i]!.id,
-        diagnosis: diagnoses[i]!,
-        notes: notesList[i]!,
-        symptoms: symptomsList[i]!,
-        vitals: 'BP: 120/80, Pulse: 72',
-        followUpDate: i === 0 ? new Date('2024-03-20') : null,
-        followUpNotes: i === 0 ? 'Follow-up ECG recommended' : null,
-      },
-    });
-
+      }
+    })
+    if (!c) {
+      c = await prisma.consultation.create({
+        data: {
+          appointmentId: completed[i]!.id,
+          diagnosis: diagnoses[i]!,
+          notes: notesList[i]!,
+          symptoms: symptomsList[i]!,
+          vitals: 'BP: 120/80, Pulse: 72',
+          followUpDate: i === 0 ? new Date('2024-03-20') : null,
+          followUpNotes: i === 0 ? 'Follow-up ECG recommended' : null,
+        },
+      });
+    }
     const meds = [
       [
         { medicineName: 'Aspirin', dosage: '75mg', frequency: 'Once daily', duration: '30 days', instructions: 'After breakfast' },
@@ -193,59 +200,61 @@ async function main() {
   }
   console.log(`✅ ${paymentData.length} payments created`);
   // 7. Create Medical Records
-  const medicalRecords = [
-    {
-      patientId: allPatients[0]!.id,
-      recordType: "Lab Report",
-      title: "Complete Blood Count",
-      description: "Blood test results are normal.",
-      attachments: "blood_report.pdf",
-      recordedBy: allDoctors[0]!.id,
-      recordDate: new Date("2024-03-15"),
-    },
-    {
-      patientId: allPatients[1]!.id,
-      recordType: "X-Ray",
-      title: "Chest X-Ray",
-      description: "Chest X-Ray shows no abnormalities.",
-      attachments: "chest_xray.pdf",
-      recordedBy: allDoctors[1]!.id,
-      recordDate: new Date("2024-03-16"),
-    },
-    {
-      patientId: allPatients[2]!.id,
-      recordType: "MRI",
-      title: "Brain MRI",
-      description: "MRI scan is normal.",
-      attachments: "brain_mri.pdf",
-      recordedBy: allDoctors[2]!.id,
-      recordDate: new Date("2024-03-17"),
-    },
-    {
-      patientId: allPatients[3]!.id,
-      recordType: "ECG",
-      title: "ECG Report",
-      description: "Normal sinus rhythm.",
-      attachments: "ecg_report.pdf",
-      recordedBy: allDoctors[0]!.id,
-      recordDate: new Date("2024-03-18"),
-    },
-    {
-      patientId: allPatients[4]!.id,
-      recordType: "Prescription",
-      title: "General Prescription",
-      description: "Prescribed medicines for follow-up treatment.",
-      attachments: "prescription.pdf",
-      recordedBy: allDoctors[4]!.id,
-      recordDate: new Date("2024-03-19"),
-    },
-  ];
-  for (const record of medicalRecords) {
-    await prisma.medicalRecord.create({
-      data: record,
-    });
-  }
-  console.log(`✅ ${medicalRecords.length} medical records created`);  
+const medicalRecords = [
+  {
+    patientId: allPatients[0]!.id,
+    recordType: "Lab Report",
+    title: "Complete Blood Count",
+    description: "Blood test results are normal.",
+    attachments: "blood_report.pdf",
+    recordedBy: allDoctors[0]!.id,
+    recordDate: new Date("2024-03-15"),
+  },
+  {
+    patientId: allPatients[1]!.id,
+    recordType: "X-Ray",
+    title: "Chest X-Ray",
+    description: "Chest X-Ray shows no abnormalities.",
+    attachments: "chest_xray.pdf",
+    recordedBy: allDoctors[1]!.id,
+    recordDate: new Date("2024-03-16"),
+  },
+  {
+    patientId: allPatients[2]!.id,
+    recordType: "MRI",
+    title: "Brain MRI",
+    description: "MRI scan is normal.",
+    attachments: "brain_mri.pdf",
+    recordedBy: allDoctors[2]!.id,
+    recordDate: new Date("2024-03-17"),
+  },
+  {
+    patientId: allPatients[3]!.id,
+    recordType: "ECG",
+    title: "ECG Report",
+    description: "Normal sinus rhythm.",
+    attachments: "ecg_report.pdf",
+    recordedBy: allDoctors[0]!.id,
+    recordDate: new Date("2024-03-18"),
+  },
+  {
+    patientId: allPatients[4]!.id,
+    recordType: "Prescription",
+    title: "General Prescription",
+    description: "Prescribed medicines for follow-up treatment.",
+    attachments: "prescription.pdf",
+    recordedBy: allDoctors[4]!.id,
+    recordDate: new Date("2024-03-19"),
+  },
+];
+
+for (const record of medicalRecords) {
+  await prisma.medicalRecord.create({
+    data: record,
+  });
+}
+
+console.log(`✅ ${medicalRecords.length} medical records created`);
   console.log('🎉 Seed completed!');
 }
 
