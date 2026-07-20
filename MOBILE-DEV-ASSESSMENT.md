@@ -1,6 +1,6 @@
 # React Native Developer — Assessment Task
 
-**Time Limit:** 5 days
+**Time Limit:** 2 days
 **Stack:** React Native + Expo (managed workflow) + TypeScript
 **What we're testing:** Can this person build production-quality mobile screens for a hospital app?
 
