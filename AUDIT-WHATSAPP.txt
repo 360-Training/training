@@ -1,0 +1,117 @@
+*Day 1 Audit — My Review*
+
+I went through every branch, every commit, every line. Here's where everyone stands.
+
+━━━━━━━━━━━━━━
+
+*Harshitha — 77/100* ✅
+
+Good: All 4 exercises done. Best git practice in the group — one commit per exercise, proper messages, clean workflow. Hours 1-4 look genuine. Code has small human inconsistencies that tell me you were actually writing it.
+
+Concern: Hours 5-6 and 7-8 are too polished. Using Promise.all with async mapping, full Dashboard service architecture, proper module system — all of it correct with zero bugs on your first day. That's not typical. Either you're genuinely talented or you had help. I'll find out when we sit together.
+
+━━━━━━━━━━━━━━
+
+*Manaswini — 76/100* ✅
+
+Good: Most genuine work in the group. Your commit message accidentally has ":wq" in it — that's a vim terminal mistake you can't fake. Personal names in test data, real bugs in your code, defined the same function twice while learning destructuring — these are all signs of actual hands-on practice.
+
+Concern: One section in Hour 5-6 doesn't match the rest of your work. You wrote five custom error classes — NotFoundError, ValidationError, ConflictError, UnauthorizedError, PaymentError — each with HTTP status codes. That's professional REST API error handling. The rest of your code is beginner level. That section came from somewhere outside your own head.
+
+━━━━━━━━━━━━━━
+
+*Srinitha — 58/100* ⚠️
+
+Bad: Your last 7 commits on Hour 7-8 all say "Update classes-modules." Seven times. Exact same message. That's not how someone who's learning commits code. That's copy-paste behaviour — generate, paste, commit, repeat.
+
+The code itself uses optional chaining `?.`, parameter destructuring, spread operators — all correctly, all immediately. These are features developers learn over months. You used them perfectly on Day 1 with zero trial and error visible anywhere.
+
+Worst part: every test case in Hour 7-8 is commented out. You wrote the code but couldn't run it — which means you don't fully understand what you submitted.
+
+Good: The code is technically complete and correct. If you actually wrote it, you're ahead of everyone.
+
+━━━━━━━━━━━━━━
+
+*Soumya — 50/100* ❌
+
+I found a folder called `.refact` in your branch. That's the Refact.ai coding assistant — an AI tool that runs inside VS Code. You committed its config files to GitHub by accident.
+
+The settings inside it: `proactive_enabled: true`, `autonomous_chats_enabled: true`, `message_observation_enabled: true`. That means the AI was watching your code and suggesting while you worked. That's a fact, not an assumption — it's in your git history.
+
+Beyond that: Day 1 is incomplete. Hour 3-4 has no appointment system. Hour 5-6 has one function. You moved to Day 2 TypeScript without finishing Day 1.
+
+The TypeScript work looks genuine. The Day 1 JS work is incomplete and done with an AI tool running.
+
+━━━━━━━━━━━━━━
+
+*Abhinaya — 30/100* ❌
+
+Only one exercise submitted out of four. And that one was uploaded through GitHub's website — not pushed from the terminal. There's a commit in your history that says "Add files via upload" — that means you didn't use git at all. You went to github.com, clicked upload, and dropped a file in. Then you deleted it.
+
+The recovered code has some genuine parts — for loops, basic logic, typos in your own comments. But the submission method completely defeats the purpose of the training.
+
+━━━━━━━━━━━━━━
+
+*Sanjay — 42/100* ❌
+
+Sanjay, you've submitted the most files — Day 1, Day 2, Day 3. On paper that looks impressive. But when I actually read the code, there are serious problems.
+
+First, the commit history:
+
+"updated", "fullchanges", "newchange", "updatedtotalchanges", "uptojschanges", "day2changes", "day3changes"
+
+Seven commits. Every single one is a vague meaningless message. This is exactly what happens when you're focused on getting code in rather than actually learning.
+
+*Hour 1-2 — Didn't follow the spec:*
+
+The exercise asked you to build a patient registry with specific fields: id, name, age, phone, bloodGroup, allergies, isActive. And specific functions: registerPatient, findPatientByPhone, listActivePatients, deactivatePatient.
+
+You built something completely different. Your patients have `disease` and `emergency` fields instead. You didn't write any of the required functions. You just wrote forEach and filter directly on the array.
+
+Also — "John Doe", "Sarah Smith", "Mike Johnson". These are default AI placeholder names. Everyone else in the group used Indian names, personal names, local names. You used textbook American names which is a clear sign the initial data came from an AI or tutorial.
+
+*Hour 3-4 — Logic is broken:*
+
+Your bookAppointment function does this:
+
+Books the appointment first, prints "Appointment booked successfully", then checks if the doctor exists, then checks if the slot is valid.
+
+The validation happens after the booking. So even if the doctor doesn't exist, the booking goes through and you'd only catch the error after it already happened. This is a critical logic error. An AI generating code sometimes misorders logic like this because it generates line by line. A person thinking through the flow would put the checks first.
+
+*Hour 5-6 — Completely missed the point:*
+
+The exercise was about learning async/await with simulated delays using setTimeout and local data — to understand how async works before touching real APIs.
+
+You called a live external API: `fetch("https://jsonplaceholder.typicode.com/users")`
+
+This is copy-pasted from a "how to use fetch" tutorial. You didn't simulate anything. You didn't practice Promises or async patterns. You just called a third-party endpoint and printed users. The comment in your code even says "here we use BE link" — which tells me you didn't understand what the exercise was asking.
+
+*Hour 7-8 — Too minimal:*
+
+Your Patient class has three fields: id, name, disease. The exercise spec has seven. Your PatientService is two bare functions, not a class. The whole module system is barely assembled.
+
+*Day 2 TypeScript — Mixed:*
+
+This is the most genuine-looking section. You have compiled files (.js, .js.map, .d.ts) committed alongside the .ts file — which means you actually ran `tsc` on your computer. That's a real sign you were working locally.
+
+You also have a typo in your Day 3 folder: the file is called `Appoinmemt.ts` — double m, wrong order. You can't fake a typo like that.
+
+But the Day 2 generics file has TypeScript errors in it — you reference `displayPerson(doctor)` but Doctor doesn't have a `name` field which the Person constraint requires. And in the TS basics file you declare both an `interface Patients` and a `const Patients` with the same name, which TypeScript would reject. This tells me you generated the code but didn't actually compile and verify it.
+
+*Day 3 — AI-generated architecture:*
+
+You built BaseEntity, BaseService with generics, full service inheritance — PatientService extends BaseService, DoctorService extends BaseService. This is an enterprise Java/Spring pattern translated to TypeScript.
+
+Nobody on Day 3 of their first week independently arrives at a generic base service class. This came from asking AI "how do I structure a TypeScript hospital system" and it gave you a production-grade architecture.
+
+The code structure is correct but it's clear you don't fully own it — because Hour 1-2 and Hour 5-6 show a very different level of understanding.
+
+━━━━━━━━━━━━━━
+
+*Bottom line*
+
+Manaswini is working the hardest. Harshitha has the best process. Sanjay submitted the most but understood the least. Srinitha has the best looking code but I don't know if she wrote it. Soumya had an AI tool running the whole time. Abhinaya didn't follow the workflow at all.
+
+No AI tools during training. No browser uploads. Commit after each function with a real message. That's it.
+
+— Shivaganesh
